@@ -1,0 +1,1542 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MenuMind AI - Optimiza tu menú con Inteligencia Artificial</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js"></script>
+    <script>
+        (function() {
+            emailjs.init("YOUR_USER_ID"); // Reemplaza con tu ID de EmailJS
+        })();
+    </script>
+    <style>
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #4ecdc4;
+            --dark: #292f36;
+            --light: #f7f9fc;
+            --success: #1a936f;
+            --accent: #ff9e6d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f5ff;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #292f36 0%, #1a202c 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo i {
+            color: var(--primary);
+            margin-right: 10px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(41, 47, 54, 0.9), rgba(41, 47, 54, 0.8)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3') no-repeat center center/cover;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1.2s ease;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+            animation: fadeInUp 1.4s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary);
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.4);
+        }
+        
+        .btn-secondary:hover {
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.6);
+        }
+        
+        .btn-success {
+            background: var(--success);
+            box-shadow: 0 4px 15px rgba(26, 147, 111, 0.4);
+        }
+        
+        .btn-success:hover {
+            box-shadow: 0 6px 20px rgba(26, 147, 111, 0.6);
+        }
+        
+        section {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .section-title p {
+            color: #666;
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .features {
+            background-color: white;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 2rem;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .demo {
+            background-color: #f0f8ff;
+        }
+        
+        .demo-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .demo-content {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .demo-image {
+            flex: 1;
+            min-width: 300px;
+            background: linear-gradient(145deg, #e0e7ff, #ffffff);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+        
+        .demo-box {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .demo-box h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: #e0e7ff;
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--success);
+            border-radius: 5px;
+        }
+        
+        .pricing {
+            background-color: white;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px 30px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+            border: 2px solid #eef2f7;
+        }
+        
+        .pricing-card:hover {
+            transform: scale(1.03);
+            border-color: var(--secondary);
+        }
+        
+        .pricing-card.popular {
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+        
+        .popular-tag {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 20px 0;
+        }
+        
+        .price span {
+            font-size: 1.2rem;
+            color: #777;
+            font-weight: 400;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin: 30px 0;
+            text-align: left;
+        }
+        
+        .pricing-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+        
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .pricing-features li i {
+            color: var(--success);
+            margin-right: 10px;
+        }
+        
+        .testimonials {
+            background-color: #f0f8ff;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+        
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-right: 15px;
+        }
+        
+        .testimonial-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .testimonial-info p {
+            color: #777;
+        }
+        
+        .rating {
+            color: #ffc107;
+            margin: 10px 0;
+        }
+        
+        .contact {
+            background: linear-gradient(135deg, #292f36 0%, #1a202c 100%);
+            color: white;
+        }
+        
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .contact-info p {
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+        
+        .contact-details {
+            list-style: none;
+        }
+        
+        .contact-details li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .contact-details li i {
+            margin-right: 15px;
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+        
+        .contact-form {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .contact-form h3 {
+            color: var(--dark);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--secondary);
+            outline: none;
+        }
+        
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h4 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #333;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* WhatsApp Float Button */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 3px #999;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1);
+        }
+        
+        .whatsapp-float i {
+            margin-top: 5px;
+        }
+        
+        /* Nuevos estilos para mejoras */
+        .lead-magnet {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .lead-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .lead-form input {
+            flex: 1;
+            min-width: 250px;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+        }
+        
+        .lead-form button {
+            background: var(--dark);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .lead-form button:hover {
+            background: var(--primary);
+        }
+        
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin: 40px 0;
+        }
+        
+        .badge {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            color: var(--dark);
+        }
+        
+        .results-guarantee {
+            background: linear-gradient(135deg, #1a936f 0%, #88d498 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .upsell-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            border-left: 5px solid var(--primary);
+        }
+        
+        .pricing-card.popular {
+            transform: scale(1.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .popular-tag {
+            position: absolute;
+            top: 15px;
+            right: -35px;
+            background: var(--primary);
+            color: white;
+            padding: 5px 40px;
+            transform: rotate(45deg);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .featured-restaurants {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .restaurant-logo {
+            background: white;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 15px;
+        }
+        
+        .restaurant-logo span {
+            font-weight: bold;
+            color: var(--dark);
+        }
+        
+        /* Nuevas animaciones */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 10px 0;
+        }
+        
+        /* Animaciones de entrada */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animated {
+            animation-duration: 1s;
+            animation-fill-mode: both;
+        }
+        
+        .fadeInUp {
+            animation-name: fadeInUp;
+        }
+        
+        /* Mejoras responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            nav ul {
+                display: none;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 24px;
+            }
+            
+            .lead-form {
+                flex-direction: column;
+            }
+            
+            .lead-form input, .lead-form button {
+                width: 100%;
+            }
+            
+            .trust-badges {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .demo-container {
+                flex-direction: column;
+            }
+        }
+        
+        /* GitHub Corner */
+        .github-corner {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 1000;
+        }
+        
+        .github-corner svg {
+            fill: #151513;
+            color: #fff;
+            position: absolute;
+            top: 0;
+            border: 0;
+            right: 0;
+        }
+        
+        .github-corner .octo-arm {
+            transform-origin: 130px 106px;
+        }
+        
+        .github-corner:hover .octo-arm {
+            animation: octocat-wave 560ms ease-in-out;
+        }
+        
+        @keyframes octocat-wave {
+            0%, 100% { transform: rotate(0); }
+            20%, 60% { transform: rotate(-25deg); }
+            40%, 80% { transform: rotate(10deg); }
+        }
+        
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--success);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Toast notification -->
+    <div class="toast" id="toast"></div>
+    
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/5352449177" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                <span>MenuMind AI</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#features">Cómo funciona</a></li>
+                    <li><a href="#demo">Demo</a></li>
+                    <li><a href="#pricing">Precios</a></li>
+                    <li><a href="#testimonials">Casos de éxito</a></li>
+                    <li><a href="#contact">Contacto</a></li>
+                    <li><a href="#signup" class="btn" style="padding: 8px 20px;">Prueba Gratis</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section - Mejorada -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Optimiza tu menú con Inteligencia Artificial</h1>
+            <p>Descubre qué platos eliminar, qué nuevos platos añadir y cómo ajustar precios para aumentar tus ganancias hasta un 30%</p>
+            
+            <div class="results-guarantee">
+                <h3><i class="fas fa-shield-alt"></i> Garantía de resultados</h3>
+                <p>Aumenta tus ganancias en un 15% mínimo o te devolvemos tu dinero</p>
+            </div>
+            
+            <div class="lead-magnet animated fadeInUp">
+                <h3>¡Obtén tu análisis gratuito ahora!</h3>
+                <p>Envíanos tu menú y recibe 3 recomendaciones sin costo</p>
+                <div class="lead-form">
+                    <input type="email" placeholder="Tu mejor email" id="lead-email" required>
+                    <button onclick="captureLead()">Enviar menú para análisis <i class="fas fa-arrow-right"></i></button>
+                </div>
+                <p style="font-size: 0.8rem; margin-top: 10px;">Solo te contactaremos con los resultados</p>
+            </div>
+            
+            <div class="trust-badges">
+                <div class="badge">
+                    <i class="fas fa-check-circle" style="color: var(--success);"></i>
+                    <span>+200 restaurantes optimizados</span>
+                </div>
+                <div class="badge">
+                    <i class="fas fa-star" style="color: gold;"></i>
+                    <span>4.9/5 en satisfacción</span>
+                </div>
+                <div class="badge">
+                    <i class="fas fa-bolt" style="color: var(--primary);"></i>
+                    <span>Resultados en 24 horas</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Estadísticas de Resultados -->
+    <section style="background: white; padding: 4rem 0;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Resultados Comprobados</h2>
+                <p>Los números hablan por sí solos</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card animated fadeInUp">
+                    <i class="fas fa-chart-line" style="font-size: 2.5rem; color: var(--success);"></i>
+                    <div class="stat-value">+27%</div>
+                    <p>Ganancias promedio</p>
+                </div>
+                <div class="stat-card animated fadeInUp" style="animation-delay: 0.2s;">
+                    <i class="fas fa-utensils" style="font-size: 2.5rem; color: var(--primary);"></i>
+                    <div class="stat-value">-35%</div>
+                    <p>Desperdicio de alimentos</p>
+                </div>
+                <div class="stat-card animated fadeInUp" style="animation-delay: 0.4s;">
+                    <i class="fas fa-clock" style="font-size: 2.5rem; color: var(--secondary);"></i>
+                    <div class="stat-value">24h</div>
+                    <p>Para obtener resultados</p>
+                </div>
+                <div class="stat-card animated fadeInUp" style="animation-delay: 0.6s;">
+                    <i class="fas fa-smile" style="font-size: 2.5rem; color: gold;"></i>
+                    <div class="stat-value">94%</div>
+                    <p>Clientes satisfechos</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section - Mejorada -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Cómo Funciona MenuMind AI</h2>
+                <p>Nuestra tecnología analiza múltiples factores para optimizar tu menú y aumentar tu rentabilidad</p>
+            </div>
+            
+            <div class="upsell-container">
+                <h3><i class="fas fa-crown" style="color: gold;"></i> Plan Premium incluye:</h3>
+                <p>Integración con tu sistema POS para análisis continuo, alertas de tendencias en tiempo real y soporte prioritario</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card animated fadeInUp">
+                    <div class="feature-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3>Escanea tu Menú</h3>
+                    <p>Sube una foto de tu menú actual o envíanoslo por email. Nuestra IA extrae todos los platos y precios automáticamente.</p>
+                </div>
+                <div class="feature-card animated fadeInUp" style="animation-delay: 0.2s;">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Análisis de Rentabilidad</h3>
+                    <p>Identificamos los platos con menor margen de ganancia y mayor desperdicio que afectan tu rentabilidad.</p>
+                </div>
+                <div class="feature-card animated fadeInUp" style="animation-delay: 0.4s;">
+                    <div class="feature-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>Recomendaciones Inteligentes</h3>
+                    <p>Te sugerimos nuevos platos basados en tendencias locales y ajustes de precios para maximizar ganancias.</p>
+                </div>
+                <div class="feature-card animated fadeInUp" style="animation-delay: 0.6s;">
+                    <div class="feature-icon">
+                        <i class="fas fa-cash-register"></i>
+                    </div>
+                    <h3>Integración con POS</h3>
+                    <p>Conectamos con tus sistemas existentes para un análisis continuo y en tiempo real de tu rentabilidad.</p>
+                </div>
+            </div>
+            
+            <!-- Restaurantes destacados -->
+            <div style="text-align: center; margin-top: 40px;">
+                <h3>Confían en nosotros:</h3>
+                <div class="featured-restaurants">
+                    <div class="restaurant-logo">
+                        <span>La Terraza</span>
+                    </div>
+                    <div class="restaurant-logo">
+                        <span>Sabor Mexicano</span>
+                    </div>
+                    <div class="restaurant-logo">
+                        <span>Bistro Francés</span>
+                    </div>
+                    <div class="restaurant-logo">
+                        <span>Café Central</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section - Mejorada -->
+    <section class="demo" id="demo">
+        <div class="container">
+            <div class="section-title">
+                <h2>Simulador de Ahorros</h2>
+                <p>Descubre cuánto podrías ahorrar con MenuMind AI</p>
+            </div>
+            
+            <div class="demo-container">
+                <div class="demo-content">
+                    <div class="demo-box animated fadeInUp">
+                        <h3>Ingresa tus datos</h3>
+                        <div class="form-group">
+                            <label for="restaurant-type">Tipo de Restaurante</label>
+                            <select id="restaurant-type">
+                                <option value="cafe">Cafetería</option>
+                                <option value="italian">Italiano</option>
+                                <option value="mexican">Mexicano</option>
+                                <option value="asian">Asiático</option>
+                                <option value="fine">Alta Cocina</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="monthly-revenue">Facturación Mensual (USD)</label>
+                            <input type="number" id="monthly-revenue" value="15000">
+                        </div>
+                        <button class="btn" onclick="calculateSavings()">Calcular Ahorros</button>
+                    </div>
+                    <div class="demo-box animated fadeInUp" id="results-box" style="display: none; animation-delay: 0.4s;">
+                        <h3>Tu Oportunidad de Ahorro</h3>
+                        <p>Con MenuMind AI podrías ahorrar hasta:</p>
+                        <h2 id="savings-amount" style="color: var(--success); margin: 15px 0;">$3,450/mes</h2>
+                        
+                        <p>Platos a optimizar: <strong id="dishes-count">5 platos</strong></p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="savings-bar" style="width: 70%;"></div>
+                        </div>
+                        
+                        <p>Tu rentabilidad podría aumentar un <strong id="profit-increase">23%</strong></p>
+                        <a href="#contact" class="btn btn-secondary">Quiero este ahorro</a>
+                    </div>
+                </div>
+                <div class="demo-image animated fadeInUp" style="animation-delay: 0.2s;">
+                    <h3>Ejemplo de Análisis</h3>
+                    <div style="background: white; border-radius: 10px; padding: 20px; margin-top: 20px;">
+                        <h4 style="color: var(--dark); margin-bottom: 15px;">Resultados para "La Terraza"</h4>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #eee;">
+                            <span>Platos a eliminar:</span>
+                            <span style="font-weight: bold; color: var(--primary);">3</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #eee;">
+                            <span>Nuevos platos sugeridos:</span>
+                            <span style="font-weight: bold; color: var(--success);">4</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                            <span>Aumento estimado de ganancias:</span>
+                            <span style="font-weight: bold; color: var(--success);">+27%</span>
+                        </div>
+                        <div style="background: #e6f7ff; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                            <p style="font-size: 0.9rem;"><i class="fas fa-lightbulb" style="color: var(--secondary); margin-right: 8px;"></i> <strong>Recomendación:</strong> Añadir bowl de quinoa (+42% demanda en tu zona)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="lead-magnet" style="margin-top: 40px;">
+                <h3>¿Listo para aumentar tus ganancias?</h3>
+                <p>Obtén un análisis personalizado sin compromiso</p>
+                <div class="lead-form">
+                    <input type="text" placeholder="Nombre de tu restaurante" id="demo-restaurant" required>
+                    <input type="email" placeholder="Tu email" id="demo-email" required>
+                    <button onclick="requestDemo()">Solicitar análisis <i class="fas fa-chart-line"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section - Mejorada -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2>Planes de Optimización</h2>
+                <p>Elige el plan que mejor se adapte a las necesidades de tu restaurante</p>
+            </div>
+            
+            <div class="upsell-container">
+                <h3><i class="fas fa-calendar-alt"></i> ¡Ahorra 20% con pago anual!</h3>
+                <p>Elige pagar anualmente y obtén 2 meses gratis + soporte prioritario</p>
+            </div>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card animated fadeInUp">
+                    <h3>Básico</h3>
+                    <div class="price">$49<span>/mes</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Análisis mensual de menú</li>
+                        <li><i class="fas fa-check"></i> 3 recomendaciones de mejora</li>
+                        <li><i class="fas fa-check"></i> Soporte por email</li>
+                        <li><i class="fas fa-check"></i> Reporte de tendencias locales</li>
+                        <li><i class="fas fa-times"></i> Integración con POS</li>
+                        <li><i class="fas fa-times"></i> Alertas en tiempo real</li>
+                    </ul>
+                    <a href="#contact" class="btn">Empezar</a>
+                </div>
+                <div class="pricing-card popular pulse-animation animated fadeInUp" style="animation-delay: 0.2s;">
+                    <div class="popular-tag">MÁS POPULAR</div>
+                    <h3>Premium</h3>
+                    <div class="price">$149<span>/mes</span></div>
+                    <p style="color: var(--success); font-weight: bold; margin: 10px 0;">¡Ahorras $360 al año!</p>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Análisis mensual de menú</li>
+                        <li><i class="fas fa-check"></i> Recomendaciones ilimitadas</li>
+                        <li><i class="fas fa-check"></i> Soporte prioritario 24/7</li>
+                        <li><i class="fas fa-check"></i> Reporte de tendencias locales</li>
+                        <li><i class="fas fa-check"></i> Integración con POS</li>
+                        <li><i class="fas fa-check"></i> Alertas en tiempo real</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-success">Elegir Premium</a>
+                </div>
+                <div class="pricing-card animated fadeInUp" style="animation-delay: 0.4s;">
+                    <h3>Personalizado</h3>
+                    <div class="price">$999<span>/proyecto</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Rediseño completo de menú</li>
+                        <li><i class="fas fa-check"></i> Entrenamiento de personal</li>
+                        <li><i class="fas fa-check"></i> Plan de implementación</li>
+                        <li><i class="fas fa-check"></i> Análisis de competencia</li>
+                        <li><i class="fas fa-check"></i> Soporte premium 3 meses</li>
+                        <li><i class="fas fa-check"></i> Garantía de resultados</li>
+                    </ul>
+                    <a href="#contact" class="btn">Solicitar</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section - Mejorada -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Casos de Éxito</h2>
+                <p>Lo que dicen nuestros clientes satisfechos</p>
+            </div>
+            
+            <div class="testimonial-grid">
+                <div class="testimonial-card animated fadeInUp">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">M</div>
+                        <div class="testimonial-info">
+                            <h4>María Rodríguez</h4>
+                            <p>Dueña, "La Vista"</p>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"Gracias a MenuMind eliminamos 3 platos que nos generaban pérdidas y añadimos 2 nuevos que ahora son nuestros más vendidos. ¡Aumentamos nuestras ganancias en un 22% en solo 2 meses!"</p>
+                </div>
+                <div class="testimonial-card animated fadeInUp" style="animation-delay: 0.2s;">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">C</div>
+                        <div class="testimonial-info">
+                            <h4>Carlos Méndez</h4>
+                            <p>Gerente, "Sabor Mexicano"</p>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"La recomendación de ajustar precios en 5 de nuestros platos fue un éxito. Los clientes no notaron el cambio y nosotros aumentamos nuestro margen en $1,200 mensuales. La IA realmente funciona."</p>
+                </div>
+                <div class="testimonial-card animated fadeInUp" style="animation-delay: 0.4s;">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">A</div>
+                        <div class="testimonial-info">
+                            <h4>Ana López</h4>
+                            <p>Chef, "Bistro Francés"</p>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p>"Me impresionó cómo la IA identificó tendencias locales que yo había pasado por alto. Las sugerencias de nuevos platos fueron un éxito inmediato. Ahora redujimos desperdicios en un 30%."</p>
+                </div>
+            </div>
+            
+            <div class="results-guarantee" style="margin-top: 40px;">
+                <h3><i class="fas fa-hand-holding-usd"></i> Programa de Referidos</h3>
+                <p>Recomienda MenuMind a otro restaurante y gana $100 en créditos por cada referido exitoso</p>
+                <a href="#contact" class="btn" style="margin-top: 15px;">Quiero referir a un colega</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section - Mejorada -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contacto</h2>
+                <p>Solicita tu análisis gratuito sin compromiso</p>
+            </div>
+            
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Comienza a optimizar tu menú hoy mismo</h3>
+                    <p>Nuestro equipo de expertos en IA gastronómica analizará tu menú y te mostrará oportunidades concretas para aumentar tus ganancias.</p>
+                    
+                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-top: 20px;">
+                        <h4><i class="fas fa-gift"></i> Oferta Especial para Nuevos Clientes</h4>
+                        <p>Regístrate hoy y obtén un 15% de descuento en tu primer mes + sesión de onboarding gratuita</p>
+                    </div>
+                    
+                    <ul class="contact-details">
+                        <li><i class="fas fa-envelope"></i> arianconde90@icloud.com</li>
+                        <li><i class="fas fa-phone"></i> +5352449177</li>
+                        <li><i class="fab fa-whatsapp"></i> WhatsApp: +5352449177</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Ciudad de México, México</li>
+                    </ul>
+                </div>
+                <div class="contact-form">
+                    <h3>Solicitar Análisis Gratis</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Nombre</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Teléfono</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="restaurant">Nombre del Restaurante</label>
+                            <input type="text" id="restaurant" name="restaurant" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="plan">Plan de interés</label>
+                            <select id="plan" name="plan">
+                                <option value="">Selecciona un plan</option>
+                                <option value="basic">Básico ($49/mes)</option>
+                                <option value="premium">Premium ($149/mes)</option>
+                                <option value="custom">Personalizado ($999/proyecto)</option>
+                                <option value="notsure">No estoy seguro, necesito asesoría</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">¿Qué desafíos enfrentas con tu menú actual?</label>
+                            <textarea id="message" name="message"></textarea>
+                        </div>
+                        <button type="submit" class="btn" style="width: 100%;">Solicitar Análisis Gratis</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer - Mejorado -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>MenuMind AI</h4>
+                    <p>Optimización de menús para restaurantes mediante inteligencia artificial. Aumenta tus ganancias, reduce desperdicios y sorprende a tus clientes.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul class="footer-links">
+                        <li><a href="#features">Cómo funciona</a></li>
+                        <li><a href="#demo">Demo</a></li>
+                        <li><a href="#pricing">Precios</a></li>
+                        <li><a href="#testimonials">Casos de éxito</a></li>
+                        <li><a href="#contact">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contacto</h4>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> arianconde90@icloud.com</li>
+                        <li><i class="fas fa-phone"></i> +5352449177</li>
+                        <li><i class="fab fa-whatsapp"></i> WhatsApp: +5352449177</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Ciudad de México</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Recibe consejos para tu restaurante</h4>
+                    <div class="lead-form" style="flex-direction: column; gap: 10px;">
+                        <input type="email" placeholder="Tu email" id="footer-email" required>
+                        <button onclick="subscribeNewsletter()">Suscribirme</button>
+                    </div>
+                    <p style="font-size: 0.8rem; margin-top: 10px;">Tips semanales para aumentar ganancias</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 MenuMind AI. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Configuración de EmailJS
+        const SERVICE_ID = "YOUR_SERVICE_ID"; // Reemplaza con tu Service ID de EmailJS
+        const TEMPLATE_ID = "YOUR_TEMPLATE_ID"; // Reemplaza con tu Template ID de EmailJS
+        
+        // Función para mostrar notificaciones
+        function showToast(message, isSuccess = true) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.background = isSuccess ? 'var(--success)' : 'var(--primary)';
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Función para enviar correo
+        function sendEmail(templateId, templateParams) {
+            emailjs.send(SERVICE_ID, templateId, templateParams)
+                .then(response => {
+                    console.log('Correo enviado!', response.status, response.text);
+                    showToast('¡Mensaje enviado con éxito! Te contactaremos pronto.');
+                })
+                .catch(error => {
+                    console.error('Error al enviar el correo:', error);
+                    showToast('Error al enviar el mensaje. Inténtalo de nuevo más tarde.', false);
+                });
+        }
+        
+        // Función para capturar leads
+        function captureLead() {
+            const email = document.getElementById('lead-email').value;
+            if(email) {
+                const templateParams = {
+                    to_email: 'arianconde90@icloud.com',
+                    from_email: email,
+                    subject: 'Nuevo lead para análisis de menú',
+                    message: `El usuario con email: ${email} ha solicitado un análisis gratuito de su menú.`
+                };
+                
+                sendEmail(TEMPLATE_ID, templateParams);
+            } else {
+                showToast("Por favor ingresa tu email", false);
+            }
+        }
+        
+        // Función para solicitar demo
+        function requestDemo() {
+            const restaurant = document.getElementById('demo-restaurant').value;
+            const email = document.getElementById('demo-email').value;
+            
+            if(restaurant && email) {
+                const templateParams = {
+                    to_email: 'arianconde90@icloud.com',
+                    from_email: email,
+                    subject: 'Solicitud de análisis para restaurante',
+                    message: `El restaurante ${restaurant} (${email}) ha solicitado un análisis personalizado.`
+                };
+                
+                sendEmail(TEMPLATE_ID, templateParams);
+            } else {
+                showToast("Por favor completa ambos campos", false);
+            }
+        }
+        
+        // Función para calcular ahorros en la demo
+        function calculateSavings() {
+            const revenue = parseInt(document.getElementById('monthly-revenue').value) || 15000;
+            const savings = revenue * 0.23; // 23% de ahorro estimado
+            
+            document.getElementById('savings-amount').textContent = '$' + savings.toLocaleString('es') + '/mes';
+            document.getElementById('dishes-count').textContent = Math.floor(revenue/3000) + ' platos';
+            document.getElementById('profit-increase').textContent = '23%';
+            document.getElementById('savings-bar').style.width = '70%';
+            
+            document.getElementById('results-box').style.display = 'block';
+            
+            // Scroll a resultados
+            document.getElementById('results-box').scrollIntoView({behavior: 'smooth'});
+        }
+        
+        // Manejar envío de formulario de contacto
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const restaurant = document.getElementById('restaurant').value;
+            const plan = document.getElementById('plan').value;
+            const message = document.getElementById('message').value;
+            
+            const templateParams = {
+                to_email: 'arianconde90@icloud.com',
+                from_name: name,
+                from_email: email,
+                subject: 'Solicitud de análisis para ' + restaurant,
+                message: `
+                    Nombre: ${name}
+                    Restaurante: ${restaurant}
+                    Email: ${email}
+                    Teléfono: ${phone || 'No proporcionado'}
+                    Plan de interés: ${plan}
+                    Mensaje: ${message || 'No proporcionado'}
+                `
+            };
+            
+            sendEmail(TEMPLATE_ID, templateParams);
+            this.reset();
+        });
+        
+        // Smooth scrolling para enlaces de navegación
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Suscripción a newsletter
+        function subscribeNewsletter() {
+            const email = document.getElementById('footer-email').value;
+            if(email) {
+                const templateParams = {
+                    to_email: 'arianconde90@icloud.com',
+                    subject: 'Nueva suscripción al newsletter',
+                    message: `El email ${email} se ha suscrito al newsletter de consejos para restaurantes.`
+                };
+                
+                sendEmail(TEMPLATE_ID, templateParams);
+                document.getElementById('footer-email').value = '';
+            } else {
+                showToast("Por favor ingresa tu email", false);
+            }
+        }
+        
+        // Animación para el plan premium
+        document.addEventListener('DOMContentLoaded', function() {
+            const premiumCard = document.querySelector('.pricing-card.popular');
+            
+            setInterval(() => {
+                premiumCard.classList.toggle('pulse-animation');
+            }, 5000);
+            
+            // Animar elementos al hacer scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated', 'fadeInUp');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.animated').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
